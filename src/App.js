@@ -9,10 +9,10 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/crypto-app">
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route exact path="/crypto-app" element={<Home />} />
         <Route path="/coins" element={<Coins />} />
         <Route path="/exchanges" element={<Exchanges />} />
         <Route path="/coin/:id" element={<CoinDetails />} />

@@ -12,7 +12,7 @@ function App() {
     <Router basename="/crypto-app">
       <Header />
       <Routes>
-        <Route exact path="/crypto-app" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/coins" element={<Coins />} />
         <Route path="/exchanges" element={<Exchanges />} />
         <Route path="/coin/:id" element={<CoinDetails />} />

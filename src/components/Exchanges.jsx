@@ -8,6 +8,7 @@ import {
   Heading,
   Text,
   Image,
+  Button,
 } from "@chakra-ui/react";
 
 import Loader from "./Loader";
@@ -19,12 +20,20 @@ const Exchanges = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("No Error");
+  const [page, setPage] = useState(1);
+
+  const changePage = (page) => {
+    setPage(page);
+    setLoading(true);
+  };
+
+  const btns = new Array(132).fill(1);
 
   // use Effect hook to call api at run time
   useEffect(() => {
     const fetchExchanges = async () => {
       try {
-        const { data } = await axios.get(`${server}/exchanges`);
+        const { data } = await axios.get(`${server}/exchanges?page=${page}`);
         setExchanges(data);
         setLoading(false);
       } catch (error) {
@@ -34,7 +43,7 @@ const Exchanges = () => {
       }
     };
     fetchExchanges();
-  }, []);
+  }, [page]);
 
   if (error) return <ErrorComponent message={errorMessage} />;
 
@@ -55,12 +64,27 @@ const Exchanges = () => {
               />
             ))}
           </HStack>
+
+          {/* Page Change Buttonts */}
+          <HStack w={"full"} overflow={"auto"} p={"8"}>
+            {btns.map((item, index) => (
+              <Button
+                key={index + item}
+                bgColor={"#2B6CB0"}
+                color={"white"}
+                onClick={() => changePage(index + 1)}
+              >
+                {index + 1}
+              </Button>
+            ))}
+          </HStack>
         </>
       )}
     </Container>
   );
 };
 
+// Exchange Card component for card
 const ExchangeCard = ({ name, img, rank, url }) => (
   <a href={url} target={"blank"}>
     <VStack
